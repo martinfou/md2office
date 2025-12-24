@@ -38,7 +38,7 @@ jobs:
           Get-Item $archiveName | Select-Object Name, Length
       
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: md2office-windows
           path: |
@@ -74,7 +74,7 @@ jobs:
           cd ..
       
       - name: Upload macOS Intel artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: md2office-macos-intel
           path: |
@@ -110,7 +110,7 @@ jobs:
           cd ..
       
       - name: Upload macOS ARM artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: md2office-macos-arm
           path: |
@@ -125,7 +125,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: artifacts
       
