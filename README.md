@@ -20,11 +20,16 @@ A portable CLI tool that converts Microsoft Copilot-generated markdown documents
 - 🔧 **Cross-Platform** - Works on Windows, macOS, and Linux
 - 📦 **Portable** - Self-contained binaries, no installation required
 
+
+
+
+
+
 ## 📸 Screenshots
 
 ![md2office GUI Main Window](docs/assets/screenshots/gui-main-window.png)
 
-![md2office GUI with File Selected](docs/assets/screenshots/gui-file-selected.png)
+![md2office GUI - Screenshot 2](docs/assets/screenshots/gui-file-selected.png)
 
 
 ## 🚀 Quick Start
