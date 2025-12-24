@@ -115,16 +115,16 @@ echo -e "${YELLOW}  3. Positioned where you want it captured${NC}"
 echo -e "${YELLOW}You have 5 seconds to position the window...${NC}"
 sleep 5
 
-# Capture main window screenshot
+# Capture main window screenshot - 5 second countdown
 echo ""
-MAIN_SCREENSHOT=$(capture_screenshot "gui-main-window" "Main GUI Window" 1 3)
+MAIN_SCREENSHOT=$(capture_screenshot "gui-main-window" "Main GUI Window" 1 5)
 
 # Wait a bit more
 sleep 1
 
-# Capture with file selected (if possible)
+# Capture with file selected - 10 second countdown
 echo ""
-FILE_SCREENSHOT=$(capture_screenshot "gui-file-selected" "GUI with File Selected" 1 3)
+FILE_SCREENSHOT=$(capture_screenshot "gui-file-selected" "GUI with File Selected" 1 10)
 
 echo ""
 echo -e "${BLUE}Step 4: Updating README.md...${NC}"

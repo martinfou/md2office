@@ -320,17 +320,17 @@ def main():
     # Capture screenshots
     screenshot_paths = []
     
-    # Main window
+    # Main window - 5 second countdown
     print()
-    path = capture_screenshot("gui-main-window.png", "Main GUI Window", delay=1, countdown=3)
+    path = capture_screenshot("gui-main-window.png", "Main GUI Window", delay=1, countdown=5)
     if path:
         screenshot_paths.append(path)
     
     time.sleep(1)
     
-    # Additional screenshot (file selected)
+    # Additional screenshot (file selected) - 10 second countdown
     print()
-    path = capture_screenshot("gui-file-selected.png", "GUI with File Selected", delay=1, countdown=3)
+    path = capture_screenshot("gui-file-selected.png", "GUI with File Selected", delay=1, countdown=10)
     if path:
         screenshot_paths.append(path)
     
