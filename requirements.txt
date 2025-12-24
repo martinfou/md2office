@@ -1,0 +1,26 @@
+# Core runtime dependencies for md2office
+# Python 3.8+ required
+#
+# NOTE: This file mirrors pyproject.toml [project.dependencies]
+# The authoritative source is pyproject.toml
+# 
+# Installation options:
+#   1. Recommended: pip install -e .  (uses pyproject.toml)
+#   2. Alternative: pip install -r requirements.txt
+#
+# This file is maintained manually to match pyproject.toml
+# If dependencies differ, pyproject.toml takes precedence
+
+# YAML support for configuration files
+PyYAML>=6.0
+
+# Document generation libraries
+python-docx>=0.8.11  # For Word documents
+python-pptx>=0.6.21  # For PowerPoint documents
+reportlab>=3.6.0     # For PDF generation
+
+# CLI framework
+click>=8.1.0
+
+# GUI framework
+PySide6>=6.5.0

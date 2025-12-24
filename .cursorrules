@@ -1,0 +1,68 @@
+# Cursor AI Configuration
+
+## Coding Preferences
+
+### General Guidelines
+- Follow consistent code style and formatting
+- Write clear, self-documenting code with meaningful variable names
+- Add comments for complex logic or business rules
+- Prefer explicit over implicit code
+
+### Language-Specific Preferences
+- Use modern JavaScript/TypeScript features when appropriate
+- Follow project-specific conventions for file structure
+- Maintain consistent indentation (spaces vs tabs)
+
+### Code Quality
+- Write tests for critical functionality
+- Keep functions focused and single-purpose
+- Avoid deep nesting when possible
+- Use early returns to reduce complexity
+
+## Project Context
+This is an AI recipe generator project. When working with:
+- Recipe definitions: Follow the templates in `templates/`
+- Documentation: Maintain consistency with existing docs in `docs/`
+- Process guides: Reference `recipe-guide.md` for project recipes
+
+## AI Assistant Instructions
+- Provide clear, actionable suggestions
+- Explain reasoning when making architectural decisions
+- Suggest improvements while respecting existing patterns
+- Ask clarifying questions when requirements are ambiguous
+
+## Context Window Preferences
+- Use Max Mode for large refactorings or when working with multiple files
+- Use Auto Mode for general development tasks
+- Be mindful of token usage for cost optimization
+
+
+
+## Git commit message generation and version control documentation.
+
+**Preset**: 
+- Title: Must contain the task number or ID, followed by a short business description
+- First paragraph: Use business language that describes why the changes were made and how they will help users or improve the business value. Focus on the benefits and impact from a business perspective.
+- Second paragraph: Use technical language geared toward programmers and technical stakeholders. Use bullet points to list:
+  - Technical implementation details
+  - Code changes and architecture decisions
+  - Dependencies or system interactions
+  - Performance considerations or optimizations
+  - Any technical trade-offs or considerations
+- Format: <type>(<scope>): <subject>
+- Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
+- Subject line: Maximum 50 characters, imperative mood, capitalized, no period
+- Body: First paragraph (business-focused), blank line, second paragraph (technical bullets)
+- Footer: Reference issues/PRs (e.g., "Closes #123" or "Refs #456")
+- Tone: Professional, concise, clear
+- Structure: Type header, blank line, business paragraph, blank line, technical paragraph (bullets), blank line, footer
+
+when asked to commit code, you must generate a commit message in a text file named commit-message.txt and ask the user to confirm it is appropriate.
+
+
+**Exception**: 
+- Do not include implementation details in the subject line
+- Do not use past tense ("Added" → use "Add")
+- Do not exceed character limits
+- Do not skip the body for non-trivial changes
+- Do not include personal opinions or emotional language

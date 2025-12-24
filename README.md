@@ -1,144 +1,244 @@
-# Copilot Markdown to Office Document Converter
+# md2office
 
-## Problem Statement
+**Convert Microsoft Copilot markdown to Word, PowerPoint, and PDF formats**
 
-Microsoft Copilot generates markdown documents that are perfect for technical documentation and content creation. However, many business stakeholders and organizations require documents in standard Office formats (Word, PowerPoint, PDF) for collaboration, presentation, and archival purposes. Manually converting Copilot-generated markdown to these formats is time-consuming and error-prone, often resulting in loss of formatting, structure, and visual consistency.
+[![CI](https://github.com/martinfou/md2office/workflows/CI/badge.svg)](https://github.com/martinfou/md2office/actions)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This recipe addresses the need for an automated, reliable tool that converts Microsoft Copilot-generated markdown documents into professional Word (.docx), PowerPoint (.pptx), and PDF formats while preserving document structure, formatting, and styling.
+A portable CLI tool that converts Microsoft Copilot-generated markdown documents into professional Word (.docx), PowerPoint (.pptx), and PDF formats while preserving document structure, formatting, and styling.
 
-## Project Description
+## ✨ Features
 
-This recipe creates comprehensive specifications and implementation plans for a portable CLI tool that converts Microsoft Copilot-generated markdown documents into Microsoft Word, PowerPoint, and optionally PDF formats. The tool will be distributed as a self-contained binary executable that works on Windows and Mac without installation or external dependencies.
+- 📄 **Word Conversion** - Convert markdown to professional Word documents
+- 📊 **PowerPoint Conversion** - Transform markdown into presentation slides
+- 📑 **PDF Generation** - Create PDF documents from markdown
+- 🖥️ **Graphical User Interface** - User-friendly GUI with drag-and-drop support
+- 🎨 **Consistent Styling** - Unified styling system across all formats
+- 🖼️ **Media Support** - Handle images and media files
+- ⚡ **Fast & Reliable** - Efficient conversion with error handling
+- 🔧 **Cross-Platform** - Works on Windows, macOS, and Linux
+- 📦 **Portable** - Self-contained binaries, no installation required
 
-The recipe produces detailed technical specifications including:
-- **Markdown Analysis**: Comprehensive analysis of Copilot markdown structure and syntax
-- **Conversion Architecture**: Overall conversion strategy and structural mappings
-- **Format Specifications**: Detailed specifications for Word, PowerPoint, and PDF conversion
-- **Styling System**: Unified styling guide ensuring consistent visual design across formats
-- **Media Handling**: Image and media processing specifications
-- **CLI Design**: Complete command-line interface specification
-- **Build Strategy**: Cross-platform build guide for Windows and Mac portable binaries
-- **Quality Assurance**: Comprehensive test suite and QA plan
+## 🚀 Quick Start
 
-## Usage Instructions
+### Installation
 
-### For Recipe Execution
+```bash
+# Using pip
+pip install md2office
 
-This recipe is designed to be executed by an LLM following the step-by-step process defined in the recipe execution guide.
-
-#### Step 1: Review Recipe Structure
-
-Familiarize yourself with the recipe structure:
-- `artifacts/` - Contains recipe definition, requirements, and all generated artifacts
-- `personas/` - Contains 11 persona specification files (01-11)
-- `recipe-execution-guide.md` - Complete execution instructions for LLM
-
-#### Step 2: Execute Recipe
-
-Ask your LLM to execute the recipe by:
-
-1. Reading `recipe-execution-guide.md`
-2. Executing all 11 personas in sequence:
-   - Markdown Parser Specialist
-   - Document Structure Architect
-   - Word Document Specialist
-   - PowerPoint Specialist
-   - PDF Generation Specialist
-   - Styling and Formatting Expert
-   - Image and Media Handler
-   - CLI and Cross-Platform Build Specialist
-   - Quality Assurance Tester
-   - Recipe Manager
-   - Recipe Analyst
-3. Generating all required artifacts in the correct locations
-
-#### Step 3: Review Generated Artifacts
-
-After execution, review the generated artifacts in `artifacts/`:
-- Conversion specifications for each format
-- CLI design and build specifications
-- Test suite and QA plans
-- Recipe analysis reports in `artifacts/recipe-analysis-report/`
-
-### For Implementation
-
-Once the recipe has been executed and all specifications are generated:
-
-1. **Review Specifications**: Read all conversion specifications in `artifacts/`
-2. **Review Analysis Reports**: Check `artifacts/recipe-analysis-report/` for gap analysis and quality assessment
-3. **Follow Implementation Roadmap**: Use the recommendations in `quality-assessment-report.md` to guide implementation
-4. **Implement Components**: Build the tool following the specifications:
-   - Markdown parser based on `markdown-analysis.md`
-   - Conversion architecture per `conversion-architecture.md`
-   - Format-specific generators per conversion specifications
-   - CLI interface per `cli-design-specification.md`
-   - Cross-platform build per `cross-platform-build-guide.md`
-5. **Execute Test Suite**: Run tests per `test-suite-specification.md`
-6. **Quality Assurance**: Follow `quality-assurance-plan.md` for validation
-
-## Recipe Structure
-
-```
-copilot-markdown-to-office-document-converter/
-├── artifacts/
-│   ├── recipe-definition.md          # Recipe definition with personas and sequence
-│   ├── recipe-requirements.md        # Initial requirements and vision
-│   ├── markdown-analysis.md          # Markdown structure analysis (generated)
-│   ├── conversion-architecture.md    # Conversion strategy (generated)
-│   ├── structural-mapping-specification.md  # Structural mappings (generated)
-│   ├── word-conversion-specification.md      # Word conversion spec (generated)
-│   ├── powerpoint-conversion-specification.md # PowerPoint conversion spec (generated)
-│   ├── pdf-conversion-specification.md       # PDF conversion spec (generated)
-│   ├── styling-guide.md              # Styling system (generated)
-│   ├── formatting-specification.md  # Formatting rules (generated)
-│   ├── media-handling-specification.md       # Media handling spec (generated)
-│   ├── cli-design-specification.md  # CLI design (generated)
-│   ├── cross-platform-build-guide.md        # Build strategy (generated)
-│   ├── test-suite-specification.md  # Test cases (generated)
-│   ├── quality-assurance-plan.md   # QA plan (generated)
-│   └── recipe-analysis-report/      # Analysis reports (generated)
-│       ├── project-status-dashboard.md
-│       ├── recipe-summary-report.md
-│       ├── gap-analysis-report.md
-│       └── quality-assessment-report.md
-├── personas/
-│   ├── 01-markdown-parser-specialist.md
-│   ├── 02-document-structure-architect.md
-│   ├── 03-word-document-specialist.md
-│   ├── 04-powerpoint-specialist.md
-│   ├── 05-pdf-generation-specialist.md
-│   ├── 06-styling-and-formatting-expert.md
-│   ├── 07-image-and-media-handler.md
-│   ├── 08-cli-and-cross-platform-build-specialist.md
-│   ├── 09-quality-assurance-tester.md
-│   ├── 10-recipe-manager.md
-│   └── 11-recipe-analyst.md
-├── recipe-execution-guide.md         # Execution instructions for LLM
-└── README.md                         # This file
+# Or install from source
+git clone https://github.com/martinfou/md2office.git
+cd md2office
+pip install -e .
 ```
 
-## Key Features
+### Basic Usage
 
-- **Comprehensive Specifications**: Complete technical specifications for all conversion formats
-- **Cross-Platform Support**: Build strategy for Windows and Mac portable binaries
-- **Professional Styling**: Unified styling system ensuring consistent output quality
-- **Quality Assurance**: Comprehensive test suite and QA plan
-- **CLI Interface**: Well-designed command-line interface for easy use
-- **Media Handling**: Complete image and media processing specifications
+**Command Line Interface:**
 
-## Requirements
+```bash
+# Convert to Word
+md2office --word document.md
 
-- Microsoft Copilot-generated markdown as input
-- Output formats: Word (.docx), PowerPoint (.pptx), PDF (optional)
-- Portable binary executable (Windows and Mac)
-- Self-contained (no external dependencies)
-- CLI interface
+# Convert to PowerPoint
+md2office --powerpoint document.md
 
-## Next Steps
+# Convert to PDF
+md2office --pdf document.md
 
-1. Execute the recipe using an LLM following `recipe-execution-guide.md`
-2. Review generated specifications and analysis reports
-3. Follow implementation roadmap from quality assessment report
-4. Build the conversion tool following specifications
-5. Test and validate using the test suite specification
+# Convert to all formats
+md2office --all document.md
 
+# Specify output directory
+md2office --word --output ./output document.md
+
+# Convert multiple files
+md2office --all --output ./output *.md
+
+# Launch GUI
+md2office --gui
+# Or simply run without arguments to launch GUI
+md2office
+```
+
+**Graphical User Interface:**
+
+The GUI provides an intuitive interface for converting markdown files:
+
+- **Drag and Drop** - Simply drag markdown files into the application window
+- **File Browser** - Browse and select files using the file picker
+- **Format Selection** - Choose Word, PowerPoint, PDF, or all formats
+- **Output Directory** - Specify where converted files should be saved
+- **Progress Tracking** - Visual progress bar during conversion
+- **Error Handling** - Clear error messages if conversion fails
+
+Launch the GUI with `md2office --gui` or run `md2office` without arguments.
+
+## 📖 Documentation
+
+Comprehensive documentation is available in the [`docs/`](docs/) directory:
+
+- **[Quick Start Guide](docs/user/quickstart.md)** - Get started quickly
+- **[Usage Guide](docs/user/usage.md)** - Detailed CLI usage instructions
+- **[GUI User Guide](docs/user/gui.md)** - Graphical user interface guide
+- **[Build Guide](docs/developer/build.md)** - Building from source
+- **[Contributing](docs/contributing.md)** - How to contribute
+- **[Security](docs/security.md)** - Security policy
+
+See [Documentation Index](docs/README.md) for complete documentation.
+
+## 🏗️ Project Structure
+
+```
+md2office/
+├── src/md2office/      # Source code
+│   ├── cli/            # CLI interface
+│   ├── gui/            # Graphical user interface
+│   ├── parser/         # Markdown parser
+│   ├── generators/     # Format generators
+│   ├── router/         # Content routing
+│   ├── styling/        # Styling system
+│   ├── config/         # Configuration
+│   ├── errors/         # Error handling
+│   ├── __main__.py     # Module entry point (python -m md2office)
+│   └── cli_entry.py    # PyInstaller entry point
+├── tests/              # Test suite
+├── docs/               # Documentation
+│   ├── user/           # User documentation
+│   ├── developer/      # Developer documentation
+│   ├── project/        # Project management docs
+│   └── specs/          # Technical specifications
+├── examples/           # Example files
+│   ├── input/          # Sample markdown files
+│   └── output/         # Sample output files
+└── scripts/            # Build and utility scripts
+```
+
+## 🛠️ Development
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/martinfou/md2office.git
+cd md2office
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+# Option 1: Using pyproject.toml (recommended)
+pip install -e .[dev]
+
+# Option 2: Using requirements files
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+
+# Install pre-commit hooks
+pre-commit install
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=md2office --cov-report=html
+
+# Run specific test
+pytest tests/test_cli.py
+```
+
+### Building
+
+The build scripts automatically set up a virtual environment, install dependencies, and build the binary. The build uses the folder method (`--onedir`) for faster startup times.
+
+**On Windows:**
+```bash
+scripts\build.bat
+# Output: dist\md2office\md2office.exe (and all dependencies)
+```
+
+**On macOS/Linux:**
+```bash
+./scripts/build.sh
+# Output: dist/md2office/md2office (and all dependencies)
+```
+
+**Manual build (if venv already set up):**
+```bash
+# Windows
+python scripts\build.py
+
+# macOS/Linux
+python scripts/build.py
+```
+
+**Using PyInstaller directly:**
+```bash
+pyinstaller scripts/pyinstaller.spec
+```
+
+**Note:** To build for both Windows and macOS, you need to run the build script on each platform. The GitHub Actions workflows automatically build for both platforms when you push a tag.
+
+### Entry Points
+
+The application can be invoked in multiple ways:
+
+- **CLI command:** `md2office [OPTIONS]` (after `pip install`)
+- **Python module:** `python -m md2office [OPTIONS]`
+- **GUI mode:** `md2office --gui` or `md2office` (no arguments)
+
+All entry points use the same underlying conversion engine. See [Entry Points Architecture](docs/developer/entry-points.md) for technical details.
+
+## 📋 Requirements
+
+- Python 3.8 or higher
+- See [pyproject.toml](pyproject.toml) for dependencies (or [requirements.txt](requirements.txt))
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guidelines](docs/contributing.md) for details.
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔒 Security
+
+Please report security vulnerabilities via [GitHub Security Advisories](https://github.com/martinfou/md2office/security/advisories/new). See [SECURITY.md](docs/security.md) for details.
+
+## 🙏 Acknowledgments
+
+- Built with Python and love
+- Uses [python-docx](https://github.com/python-openxml/python-docx) for Word generation
+- Uses [python-pptx](https://github.com/scanny/python-pptx) for PowerPoint generation
+- Uses [ReportLab](https://www.reportlab.com/) for PDF generation
+
+## 📊 Status
+
+**Current Version**: 0.1.0  
+**Status**: Core Implementation Complete (96.4%)  
+**Python Support**: 3.8, 3.9, 3.10, 3.11, 3.12
+
+## 🔗 Links
+
+- [Documentation](docs/)
+- [Issue Tracker](https://github.com/martinfou/md2office/issues)
+- [Contributing Guide](docs/contributing.md)
+- [Security Policy](docs/security.md)
+
+---
+
+**Made with ❤️ for the community**
