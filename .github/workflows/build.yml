@@ -27,11 +27,23 @@ jobs:
         run: |
           python scripts/build.py
       
+      - name: Create Windows archive
+        shell: powershell
+        run: |
+          $version = "${{ github.ref_name }}"
+          if ($version -match "^v") { $version = $version.Substring(1) }
+          $archiveName = "md2office-windows-$version.zip"
+          Compress-Archive -Path dist\md2office\* -DestinationPath $archiveName -Force
+          Write-Host "Created archive: $archiveName"
+          Get-Item $archiveName | Select-Object Name, Length
+      
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v3
         with:
           name: md2office-windows
-          path: dist/md2office/
+          path: |
+            dist/md2office/
+            md2office-windows-*.zip
   
   build-macos-intel:
     runs-on: macos-latest
@@ -53,11 +65,21 @@ jobs:
         run: |
           python scripts/build.py
       
+      - name: Create macOS Intel archive
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION=${VERSION#v}
+          cd dist
+          tar -czf ../md2office-macos-intel-${VERSION}.tar.gz md2office/
+          cd ..
+      
       - name: Upload macOS Intel artifact
         uses: actions/upload-artifact@v3
         with:
           name: md2office-macos-intel
-          path: dist/md2office/
+          path: |
+            dist/md2office/
+            md2office-macos-intel-*.tar.gz
   
   build-macos-arm:
     runs-on: macos-latest
@@ -79,29 +101,92 @@ jobs:
         run: |
           arch -arm64 python scripts/build.py
       
+      - name: Create macOS ARM archive
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION=${VERSION#v}
+          cd dist
+          tar -czf ../md2office-macos-arm-${VERSION}.tar.gz md2office/
+          cd ..
+      
       - name: Upload macOS ARM artifact
         uses: actions/upload-artifact@v3
         with:
           name: md2office-macos-arm
-          path: dist/md2office/
+          path: |
+            dist/md2office/
+            md2office-macos-arm-*.tar.gz
   
   create-release:
     needs: [build-windows, build-macos-intel, build-macos-arm]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Download all artifacts
         uses: actions/download-artifact@v3
+        with:
+          path: artifacts
       
-      - name: Create Release
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION=${VERSION#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Prepare release files
+        run: |
+          mkdir -p release-assets
+          # Copy Windows zip
+          find artifacts/md2office-windows -name "*.zip" -exec cp {} release-assets/ \;
+          # Copy macOS Intel tar.gz
+          find artifacts/md2office-macos-intel -name "*.tar.gz" -exec cp {} release-assets/ \;
+          # Copy macOS ARM tar.gz
+          find artifacts/md2office-macos-arm -name "*.tar.gz" -exec cp {} release-assets/ \;
+          ls -lh release-assets/
+      
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            md2office-windows/**
-            md2office-macos-intel/**
-            md2office-macos-arm/**
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## md2office ${{ steps.get_version.outputs.version }}
+            
+            ### Downloads
+            
+            **Windows:**
+            - [md2office-windows-${{ steps.get_version.outputs.version }}.zip](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/md2office-windows-${{ steps.get_version.outputs.version }}.zip)
+            
+            **macOS Intel:**
+            - [md2office-macos-intel-${{ steps.get_version.outputs.version }}.tar.gz](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/md2office-macos-intel-${{ steps.get_version.outputs.version }}.tar.gz)
+            
+            **macOS ARM (Apple Silicon):**
+            - [md2office-macos-arm-${{ steps.get_version.outputs.version }}.tar.gz](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/md2office-macos-arm-${{ steps.get_version.outputs.version }}.tar.gz)
+            
+            ### Installation
+            
+            1. Download the archive for your platform
+            2. Extract the archive
+            3. Run `md2office` (or `md2office.exe` on Windows) from the extracted folder
+            
+            ### Usage
+            
+            ```bash
+            # Convert to Word
+            ./md2office --word document.md
+            
+            # Convert to all formats
+            ./md2office --all document.md
+            
+            # Launch GUI
+            ./md2office --gui
+            ```
+          files: release-assets/*
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
