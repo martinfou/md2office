@@ -57,41 +57,116 @@ def capture_screenshot(filename, description, delay=2):
     try:
         if system == "Darwin":
             # macOS: screencapture
-            # -w: wait for window selection, -T 2: 2 second delay
+            # -w: capture window (interactive selection), -T 2: 2 second delay
+            # -l<windowid>: capture specific window, but we'll use -w for interactive
+            print_colored("  Click on the md2office window to capture it...", Colors.YELLOW)
             result = subprocess.run(
-                ["screencapture", "-T", "2", str(filepath)],
+                ["screencapture", "-w", "-T", "2", str(filepath)],
                 capture_output=True,
-                timeout=10
+                timeout=15
             )
             if result.returncode == 0 and filepath.exists():
                 success = True
+            else:
+                # Fallback: try to find the window by name and capture it
+                print_colored("  Trying to find md2office window automatically...", Colors.YELLOW)
+                # Use osascript to get window ID and capture it
+                applescript = '''
+                tell application "System Events"
+                    set frontApp to first application process whose frontmost is true
+                    set frontAppName to name of frontApp
+                    if frontAppName contains "Python" or frontAppName contains "md2office" then
+                        set windowList to windows of frontApp
+                        if (count of windowList) > 0 then
+                            set frontWindow to first window of frontApp
+                            return id of frontWindow
+                        end if
+                    end if
+                end tell
+                '''
+                result = subprocess.run(
+                    ["osascript", "-e", applescript],
+                    capture_output=True,
+                    text=True,
+                    timeout=5
+                )
+                if result.returncode == 0 and result.stdout.strip():
+                    window_id = result.stdout.strip()
+                    # Capture using window ID (not directly supported, so use -w)
+                    result = subprocess.run(
+                        ["screencapture", "-w", "-T", "1", str(filepath)],
+                        capture_output=True,
+                        timeout=15
+                    )
+                    if result.returncode == 0 and filepath.exists():
+                        success = True
         elif system == "Linux":
             cmd = detect_screenshot_command()
             if cmd == "gnome-screenshot":
-                # Try window selection first, fallback to full screen
+                # -w: capture window (interactive selection)
+                print_colored("  Click on the md2office window to capture it...", Colors.YELLOW)
                 result = subprocess.run(
                     ["gnome-screenshot", "-w", "-f", str(filepath)],
                     capture_output=True,
-                    timeout=10
+                    timeout=15
                 )
                 if result.returncode != 0:
-                    result = subprocess.run(
-                        ["gnome-screenshot", "-f", str(filepath)],
-                        capture_output=True,
-                        timeout=10
-                    )
+                    print_colored("  Window selection failed, trying active window...", Colors.YELLOW)
+                    # Try to capture active window using xdotool
+                    try:
+                        result = subprocess.run(
+                            ["xdotool", "getactivewindow"],
+                            capture_output=True,
+                            text=True,
+                            timeout=5
+                        )
+                        if result.returncode == 0:
+                            window_id = result.stdout.strip()
+                            result = subprocess.run(
+                                ["import", "-window", window_id, str(filepath)],
+                                capture_output=True,
+                                timeout=10
+                            )
+                    except:
+                        pass
             elif cmd == "scrot":
+                # -s: select window/area interactively
+                print_colored("  Click and drag to select the md2office window...", Colors.YELLOW)
                 result = subprocess.run(
                     ["scrot", "-s", str(filepath)],
                     capture_output=True,
-                    timeout=10
+                    timeout=15
                 )
             elif cmd == "import":
-                result = subprocess.run(
-                    ["import", "-window", "root", str(filepath)],
-                    capture_output=True,
-                    timeout=10
-                )
+                # Try to get active window first
+                try:
+                    result = subprocess.run(
+                        ["xdotool", "getactivewindow"],
+                        capture_output=True,
+                        text=True,
+                        timeout=5
+                    )
+                    if result.returncode == 0:
+                        window_id = result.stdout.strip()
+                        result = subprocess.run(
+                            ["import", "-window", window_id, str(filepath)],
+                            capture_output=True,
+                            timeout=10
+                        )
+                    else:
+                        print_colored("  Please click on the md2office window...", Colors.YELLOW)
+                        result = subprocess.run(
+                            ["import", "-window", "root", str(filepath)],
+                            capture_output=True,
+                            timeout=10
+                        )
+                except:
+                    print_colored("  Please click on the md2office window...", Colors.YELLOW)
+                    result = subprocess.run(
+                        ["import", "-window", "root", str(filepath)],
+                        capture_output=True,
+                        timeout=10
+                    )
             
             if result.returncode == 0 and filepath.exists():
                 success = True
@@ -223,9 +298,12 @@ def main():
     
     print()
     print_colored("Step 3: Capturing screenshots...", Colors.BLUE)
-    print_colored("Please position the GUI window where you want it captured", Colors.YELLOW)
-    print_colored("You have 10 seconds to position the window...", Colors.YELLOW)
-    time.sleep(10)
+    print_colored("Please make sure the md2office GUI window is:", Colors.YELLOW)
+    print_colored("  1. Visible and not minimized", Colors.YELLOW)
+    print_colored("  2. The active/frontmost window", Colors.YELLOW)
+    print_colored("  3. Positioned where you want it captured", Colors.YELLOW)
+    print_colored("You have 5 seconds to position the window...", Colors.YELLOW)
+    time.sleep(5)
     
     # Capture screenshots
     screenshot_paths = []

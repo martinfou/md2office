@@ -96,9 +96,12 @@ capture_screenshot() {
 
 echo ""
 echo -e "${BLUE}Step 3: Capturing screenshots...${NC}"
-echo -e "${YELLOW}Please position the GUI window where you want it captured${NC}"
-echo -e "${YELLOW}You have 10 seconds to position the window...${NC}"
-sleep 10
+echo -e "${YELLOW}Please make sure the md2office GUI window is:${NC}"
+echo -e "${YELLOW}  1. Visible and not minimized${NC}"
+echo -e "${YELLOW}  2. The active/frontmost window${NC}"
+echo -e "${YELLOW}  3. Positioned where you want it captured${NC}"
+echo -e "${YELLOW}You have 5 seconds to position the window...${NC}"
+sleep 5
 
 # Capture main window screenshot
 MAIN_SCREENSHOT=$(capture_screenshot "gui-main-window" "Main GUI Window" 3)
