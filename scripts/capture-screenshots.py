@@ -49,13 +49,16 @@ def capture_screenshot(filename, description, delay=2, countdown=3):
     """Capture a screenshot with countdown."""
     print_colored(f"Capturing: {description}", Colors.YELLOW)
     
-    # Show countdown
+    # Show countdown - make it more visible on macOS
     if countdown > 0:
-        print_colored(f"  Countdown starting in {countdown} seconds...", Colors.BLUE)
+        print_colored(f"  Countdown: {countdown} seconds...", Colors.BLUE)
+        sys.stdout.flush()
         for i in range(countdown, 0, -1):
-            print_colored(f"  {i}...", Colors.BLUE, end="\r")
+            print_colored(f"  ⏱️  {i}...", Colors.BLUE)
+            sys.stdout.flush()
             time.sleep(1)
-        print_colored("  Capturing now!", Colors.GREEN)
+        print_colored("  ✨ Capturing now! Click on the md2office window!", Colors.GREEN)
+        sys.stdout.flush()
     
     time.sleep(delay)
     

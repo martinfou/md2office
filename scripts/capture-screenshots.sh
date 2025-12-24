@@ -66,9 +66,21 @@ sleep 5
 capture_screenshot() {
     local name=$1
     local description=$2
-    local delay=${3:-2}
+    local delay=${3:-1}
+    local countdown=${4:-3}
     
     echo -e "${YELLOW}Capturing: $description${NC}"
+    
+    # Show countdown - make each number visible on a new line
+    if [ $countdown -gt 0 ]; then
+        echo -e "${BLUE}  Countdown: ${countdown} seconds...${NC}"
+        for i in $(seq $countdown -1 1); do
+            echo -e "${BLUE}  ⏱️  ${i}...${NC}"
+            sleep 1
+        done
+        echo -e "${GREEN}  ✨ Capturing now! Click on the md2office window!${NC}"
+    fi
+    
     sleep $delay
     
     local filename="${SCREENSHOT_DIR}/${name}.png"
