@@ -25,9 +25,9 @@ class Colors:
     BLUE = '\033[0;34m'
     NC = '\033[0m'  # No Color
 
-def print_colored(message, color=Colors.NC):
+def print_colored(message, color=Colors.NC, end="\n"):
     """Print colored message."""
-    print(f"{color}{message}{Colors.NC}")
+    print(f"{color}{message}{Colors.NC}", end=end)
 
 def detect_screenshot_command():
     """Detect available screenshot command for the OS."""
@@ -45,9 +45,18 @@ def detect_screenshot_command():
         return "snippingtool"  # Windows Snipping Tool
     return None
 
-def capture_screenshot(filename, description, delay=2):
-    """Capture a screenshot."""
+def capture_screenshot(filename, description, delay=2, countdown=3):
+    """Capture a screenshot with countdown."""
     print_colored(f"Capturing: {description}", Colors.YELLOW)
+    
+    # Show countdown
+    if countdown > 0:
+        print_colored(f"  Countdown starting in {countdown} seconds...", Colors.BLUE)
+        for i in range(countdown, 0, -1):
+            print_colored(f"  {i}...", Colors.BLUE, end="\r")
+            time.sleep(1)
+        print_colored("  Capturing now!", Colors.GREEN)
+    
     time.sleep(delay)
     
     filepath = SCREENSHOT_DIR / filename
@@ -309,14 +318,16 @@ def main():
     screenshot_paths = []
     
     # Main window
-    path = capture_screenshot("gui-main-window.png", "Main GUI Window", 3)
+    print()
+    path = capture_screenshot("gui-main-window.png", "Main GUI Window", delay=1, countdown=3)
     if path:
         screenshot_paths.append(path)
     
-    time.sleep(2)
+    time.sleep(1)
     
     # Additional screenshot (file selected)
-    path = capture_screenshot("gui-file-selected.png", "GUI with File Selected", 3)
+    print()
+    path = capture_screenshot("gui-file-selected.png", "GUI with File Selected", delay=1, countdown=3)
     if path:
         screenshot_paths.append(path)
     
