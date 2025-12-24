@@ -20,6 +20,13 @@ A portable CLI tool that converts Microsoft Copilot-generated markdown documents
 - 🔧 **Cross-Platform** - Works on Windows, macOS, and Linux
 - 📦 **Portable** - Self-contained binaries, no installation required
 
+## 📸 Screenshots
+
+![md2office GUI Main Window](docs/assets/screenshots/gui-main-window.png)
+
+![md2office GUI with File Selected](docs/assets/screenshots/gui-file-selected.png)
+
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -185,6 +192,30 @@ pyinstaller scripts/pyinstaller.spec
 ```
 
 **Note:** To build for both Windows and macOS, you need to run the build script on each platform. The GitHub Actions workflows automatically build for both platforms when you push a tag.
+
+### Capturing Screenshots
+
+To capture screenshots of the GUI for documentation:
+
+**macOS/Linux:**
+```bash
+./scripts/capture-screenshots.sh
+# Or
+python scripts/capture-screenshots.py
+```
+
+**Windows:**
+```bash
+scripts\capture-screenshots.bat
+```
+
+The script will:
+1. Launch the GUI application
+2. Wait for you to position the window
+3. Capture screenshots automatically
+4. Update README.md with screenshot references
+
+Screenshots are saved to `docs/assets/screenshots/`.
 
 ### Entry Points
 
