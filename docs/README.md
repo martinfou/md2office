@@ -8,6 +8,7 @@ Welcome to the md2office documentation. This directory contains all project docu
 - **[Quick Start Guide](user/quickstart.md)** - Get started quickly with md2office
 - **[Usage Guide](user/usage.md)** - Detailed CLI usage instructions and examples
 - **[GUI User Guide](user/gui.md)** - Graphical user interface guide
+- **[PowerPoint Template Guide](user/powerpoint-template-guide.md)** - How to structure markdown for PowerPoint generation
 
 ### For Developers
 - **[Build Guide](developer/build.md)** - Building and packaging instructions
@@ -44,6 +45,7 @@ Welcome to the md2office documentation. This directory contains all project docu
 ### Usage
 - [Usage Guide](user/usage.md) - CLI usage
 - [GUI User Guide](user/gui.md) - Graphical interface
+- [PowerPoint Template Guide](user/powerpoint-template-guide.md) - Structuring markdown for PowerPoint
 
 ### Development
 - [Contributing Guidelines](contributing.md)

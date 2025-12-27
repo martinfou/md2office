@@ -123,6 +123,7 @@ class PowerPointGenerator(FormatGenerator):
         
         elif node.node_type == NodeType.SECTION:
             # Process section - may create new slide
+            # Section processing handles its own children, so don't recurse here
             self._process_section(node, options)
         
         elif node.node_type == NodeType.HEADING:
@@ -146,12 +147,13 @@ class PowerPointGenerator(FormatGenerator):
         elif node.node_type == NodeType.IMAGE:
             self._add_image_to_slide(node, options)
         
-        # Process children recursively
+        # Process children recursively (but not for SECTION nodes - they handle their own children)
+        # Also skip already-processed content nodes
         for child in node.children:
             if child.node_type not in [NodeType.HEADING, NodeType.PARAGRAPH,
                                       NodeType.LIST, NodeType.TABLE,
                                       NodeType.CODE_BLOCK, NodeType.BLOCKQUOTE,
-                                      NodeType.IMAGE]:
+                                      NodeType.IMAGE, NodeType.SECTION]:
                 self._process_node(child, options)
     
     def _process_section(self, node: ASTNode, options: Dict[str, Any]):
@@ -175,9 +177,24 @@ class PowerPointGenerator(FormatGenerator):
             # H3+ section - may create content slide or add to current slide
             self._create_content_slide(heading, options)
         
-        # Process section content
+        # Process section content (excluding heading and nested sections)
+        # Nested sections will be processed separately to create their own slides
+        # Note: Sections can be nested under headings, so we need to check heading children too
         for child in node.children:
-            if child.node_type != NodeType.HEADING:
+            if child.node_type == NodeType.HEADING:
+                # Heading already processed above, but check if it has nested sections as children
+                for heading_child in child.children:
+                    if heading_child.node_type == NodeType.SECTION:
+                        # Process nested sections that are children of the heading
+                        self._process_section(heading_child, options)
+                    else:
+                        # Process other heading children (content)
+                        self._process_node(heading_child, options)
+            elif child.node_type == NodeType.SECTION:
+                # Process nested sections to create new slides
+                self._process_section(child, options)
+            else:
+                # Process content nodes (paragraphs, lists, etc.)
                 self._process_node(child, options)
     
     def _process_heading(self, node: ASTNode, options: Dict[str, Any]):

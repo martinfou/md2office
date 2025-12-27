@@ -12,9 +12,11 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Script directory
+# Script directory (scripts folder)
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$SCRIPT_DIR"
+# Project root (one level up from scripts)
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+cd "$PROJECT_ROOT"
 
 # Virtual environment directory
 VENV_DIR="venv"
@@ -54,6 +56,15 @@ fi
 
 # Install package in development mode
 echo -e "${YELLOW}Installing md2office package...${NC}"
+# Ensure we're in the project root directory
+cd "$PROJECT_ROOT"
+# Verify we're in the correct directory and pyproject.toml exists
+if [ ! -f "pyproject.toml" ]; then
+    echo -e "${RED}ERROR: pyproject.toml not found in $PROJECT_ROOT${NC}"
+    echo -e "${RED}Current directory: $(pwd)${NC}"
+    exit 1
+fi
+# Install from current directory (now guaranteed to be project root)
 pip install -e . --quiet
 echo -e "${GREEN}✅ Package installed${NC}"
 

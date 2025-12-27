@@ -5,7 +5,7 @@ Implements Epic 2: Word Document Conversion
 Generates Microsoft Word (.docx) documents from AST.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Union
 from io import BytesIO
 from pathlib import Path
 
@@ -19,6 +19,10 @@ try:
     DOCX_AVAILABLE = True
 except ImportError:
     DOCX_AVAILABLE = False
+    # Create a dummy RGBColor class for type hints when docx is not available
+    class RGBColor:  # type: ignore
+        def __init__(self, r: int, g: int, b: int):
+            pass
 
 from ..parser.ast_builder import ASTNode, NodeType
 from ..router.content_router import FormatGenerator, OutputFormat
@@ -448,8 +452,11 @@ class WordGenerator(FormatGenerator):
         # Simplified implementation - full version would set shading
         pass
     
-    def _parse_color(self, color_str: str) -> RGBColor:
+    def _parse_color(self, color_str: str) -> Any:
         """Parse color string to RGBColor."""
+        if not DOCX_AVAILABLE:
+            return None
+        
         if color_str.startswith('#'):
             color_str = color_str[1:]
         
