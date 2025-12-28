@@ -66,10 +66,22 @@ Some content here.
         assert 'md2office' in result.output.lower()
     
     def test_cli_no_input(self, runner):
-        """Test CLI with no input files."""
-        result = runner.invoke(cli, [])
-        assert result.exit_code != 0
-        assert 'No input files specified' in result.output or 'Missing argument' in result.output
+        """Test CLI with no input files - should launch GUI."""
+        # When no inputs are provided, CLI automatically launches GUI
+        # Mock the GUI module import to prevent it from actually opening during tests
+        from unittest.mock import patch, MagicMock
+        
+        # Create a mock GUI main function that returns immediately
+        mock_gui_main = MagicMock()
+        
+        # Patch the GUI import at the point where it's imported in the CLI
+        # The import happens as: from ..gui.gui_main import main as gui_main
+        with patch('md2office.gui.gui_main.main', mock_gui_main):
+            result = runner.invoke(cli, [], catch_exceptions=False)
+            # Verify GUI was called (since no inputs provided)
+            assert mock_gui_main.called
+            # Exit code should be 0 (GUI launch is successful, just mocked)
+            assert result.exit_code == 0
     
     def test_cli_no_format(self, runner, sample_markdown_file):
         """Test CLI with no format specified."""

@@ -5,6 +5,17 @@
 - Python 3.8 or higher
 - pip (Python package manager)
 
+### Optional: Mermaid Diagram Support
+
+For PowerPoint presentations with Mermaid diagrams, install `mermaid-cli`:
+
+```bash
+# Requires Node.js (install from https://nodejs.org/)
+npm install -g @mermaid-js/mermaid-cli
+```
+
+**Note**: Mermaid diagrams will be rendered as images in PowerPoint slides. If `mermaid-cli` is not installed, the diagram code will be displayed as text instead.
+
 ## Quick Start (Automated)
 
 ### macOS/Linux

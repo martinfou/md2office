@@ -318,6 +318,27 @@ md2office --powerpoint --output ./output your-presentation.md
 md2office --powerpoint --style professional your-presentation.md
 ```
 
+### Mermaid Diagram Support
+
+md2office can render Mermaid diagrams as images in PowerPoint slides. To enable this feature:
+
+1. **Install Node.js** (if not already installed): Download from [nodejs.org](https://nodejs.org/)
+
+2. **Install mermaid-cli**:
+   ```bash
+   npm install -g @mermaid-js/mermaid-cli
+   ```
+
+3. **Use Mermaid diagrams in your markdown**:
+   ```markdown
+   ```mermaid
+   graph LR
+       A[Start] --> B[End]
+   ```
+   ```
+
+The diagrams will be automatically rendered as images in your PowerPoint slides. If `mermaid-cli` is not installed, the diagram code will be displayed as text instead.
+
 ## Troubleshooting
 
 ### Too Much Content on One Slide

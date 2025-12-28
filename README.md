@@ -237,6 +237,14 @@ All entry points use the same underlying conversion engine. See [Entry Points Ar
 - Python 3.8 or higher
 - See [pyproject.toml](pyproject.toml) for dependencies (or [requirements.txt](requirements.txt))
 
+### Optional Dependencies
+
+**Mermaid Diagram Rendering** (for PowerPoint):
+- Node.js (install from [nodejs.org](https://nodejs.org/))
+- mermaid-cli: `npm install -g @mermaid-js/mermaid-cli`
+- Enables rendering of Mermaid diagrams as images in PowerPoint slides
+- Without this, Mermaid code blocks will be displayed as text
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please read our [Contributing Guidelines](docs/contributing.md) for details.
